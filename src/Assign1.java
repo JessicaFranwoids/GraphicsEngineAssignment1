@@ -99,7 +99,9 @@ public class Assign1 {
 
                        
                             //get the colour
-                            System.out.println(scanner.next());
+                            String rgbaString = scanner.next();
+                            rgbaString.replaceAll("\\(+", "\\ +");
+                            System.out.println(rgbaString);
                             //System.out.println(color);
                             int red = scanner.nextInt();
                             int green = scanner.nextInt(); 
