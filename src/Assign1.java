@@ -96,28 +96,21 @@ public class Assign1 {
                             //Get x and y location
                             int xc = scanner.nextInt();
                             int yc = scanner.nextInt();
-
-                       
                             //get the colour
                             String rgbaString = scanner.next();
-                            rgbaString.replaceAll("\\(+", "\\ +");
-                            System.out.println(rgbaString);
-                            //System.out.println(color);
-                            int red = scanner.nextInt();
-                            int green = scanner.nextInt(); 
-                            int blue = scanner.nextInt();
-                            int alpha = scanner.nextInt();
-
-
+                            rgbaString = rgbaString.substring(1, rgbaString.length()-1);
+                            String[] color = rgbaString.split(",");                          
+                            //set the color
+                            int red = Integer.parseInt(color[0]);
+                            int green = Integer.parseInt(color[1]);
+                            int blue = Integer.parseInt(color[2]);
+                            int alpha = Integer.parseInt(color[3]);
                             //Draw a point with our point method
                             buffer.point(xc, yc, red, green, blue, alpha);
                             canvas.repaint();
-
-                            System.out.println("Drawing point: (" + xc + "," + yc + "R=" + red + " G="+green + " B="+blue);
-                            
+                            System.out.println("Drawing point: (" + xc + "," + yc + ", R=" + red + " G="+green + " B="+blue + ")");                           
                             break;
                         case "LINE_FLOAT":
-
                             //read end point values from next 4 ints
                             int x1 = scanner.nextInt();
                             int y1 = scanner.nextInt();
