@@ -19,7 +19,7 @@ public class FrameBuffer {
 
 	//A start on the point function. NOTE this is not complete!
 	public void point(int xc, int yc, int r, int g, int b, int a) {
-		// TODO: Add point into array
+		// save point r g b a information into array
 		int rgba = r;
 		rgba = (rgba << 4) + g;
 		rgba = (rgba << 8) + b;
@@ -28,6 +28,9 @@ public class FrameBuffer {
 		
 	}
 
+	public void lineFloat(int x1, int x2, int y1, int y2, int r, int g, int b, int a) {
+		
+	}
 	// Definitions for the getRed, getGreen and getBlue functions. NOTE these are not complete!
 	public int getRed(int xc, int yc) {
 		// TODO: Implement these functions using bitwise operations and masking to retrieve individual colour components

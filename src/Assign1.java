@@ -88,7 +88,6 @@ public class Assign1 {
                             frame.add(canvas);
                             frame.setTitle("Assign1");
                             frame.setVisible(true);
-
                             System.out.println("Creating canvas, frame and buffer of size " + width + "x" + height);
                             break;
 
@@ -98,28 +97,38 @@ public class Assign1 {
                             int yc = scanner.nextInt();
                             //get the colour
                             String rgbaString = scanner.next();
-                            rgbaString = rgbaString.substring(1, rgbaString.length()-1);
-                            String[] color = rgbaString.split(",");                          
-                            //set the color
-                            int red = Integer.parseInt(color[0]);
-                            int green = Integer.parseInt(color[1]);
-                            int blue = Integer.parseInt(color[2]);
-                            int alpha = Integer.parseInt(color[3]);
+                            
+                            //set the color,using catchRGBA function
+                            int[] color = catchRGBA(rgbaString);
+                            int red = color[0];
+                            int green = color[1];
+                            int blue = color[2];
+                            int alpha = color[3];
+                            
+//                            String[] color = rgbaString.split(","); 
+//                            int red = Integer.parseInt(color[0]);
+//                            int green = Integer.parseInt(color[1]);
+//                            int blue = Integer.parseInt(color[2]);
+//                            int alpha = Integer.parseInt(color[3]);
                             //Draw a point with our point method
                             buffer.point(xc, yc, red, green, blue, alpha);
                             canvas.repaint();
                             System.out.println("Drawing point: (" + xc + "," + yc + ", R=" + red + " G="+green + " B="+blue + ")");                           
                             break;
+                            
                         case "LINE_FLOAT":
                             //read end point values from next 4 ints
                             int x1 = scanner.nextInt();
                             int y1 = scanner.nextInt();
                             int x2 = scanner.nextInt();
                             int y2 = scanner.nextInt();
+                            System.out.println(x1+y1+x2+y2);
+                            rgbaString = scanner.next();
+                            color = catchRGBA(rgbaString);
+                            int lineRed = 255, lineGreen = 0, lineBlue = 0, lineAlpha = 255;
 
-                            int lineRed = 255, LineGreen = 0, lineBlue = 0, lineAlpha = 255;
-
-                            //TODO: call lineFloat method to change pixel array and update canvas
+                            // call lineFloat method to change pixel array and update canvas
+                            buffer.lineFloat(x1, y1, x2, y2, lineRed, lineGreen, lineBlue, lineAlpha);
                             canvas.repaint();
 
                             break;
@@ -165,6 +174,16 @@ public class Assign1 {
             }
 
         }
+    }
+    
+    public static int[] catchRGBA(String rgbaString) {
+    	rgbaString = rgbaString.substring(1, rgbaString.length()-1);
+        String[] temp = rgbaString.split(",");  
+        int[] color = {Integer.parseInt(temp[0]),
+                       Integer.parseInt(temp[1]),
+                       Integer.parseInt(temp[2]),
+                       Integer.parseInt(temp[3])}; 
+        return color;
     }
 }
 
