@@ -113,7 +113,7 @@ public class Assign1 {
                             //Draw a point with our point method
                             buffer.point(xc, yc, red, green, blue, alpha);
                             canvas.repaint();
-                            System.out.println("Drawing point: (" + xc + "," + yc + ", R=" + red + " G="+green + " B="+blue + ")");                           
+                            System.out.println("Drawing point: (" + xc + "," + yc + ", R=" + red + " G="+green + " B="+blue + " A="+alpha + ")");                           
                             break;
                             
                         case "LINE_FLOAT":
@@ -122,15 +122,16 @@ public class Assign1 {
                             int y1 = scanner.nextInt();
                             int x2 = scanner.nextInt();
                             int y2 = scanner.nextInt();
-                            System.out.println(x1+y1+x2+y2);
                             rgbaString = scanner.next();
                             color = catchRGBA(rgbaString);
-                            int lineRed = 255, lineGreen = 0, lineBlue = 0, lineAlpha = 255;
+                            int lineRed = color[0], lineGreen = color[1], lineBlue = color[2], lineAlpha = color[3];
 
                             // call lineFloat method to change pixel array and update canvas
                             buffer.lineFloat(x1, y1, x2, y2, lineRed, lineGreen, lineBlue, lineAlpha);
                             canvas.repaint();
-
+                            System.out.println("Drawing line: (" + x1 + "," + y1 
+                            							+ "), (" + x2 + "," + y2 
+                            							+ ") , R=" + lineRed + " G="+lineGreen + " B="+lineBlue + " A="+ lineAlpha + ")");
                             break;
                             
                         case "LINE":

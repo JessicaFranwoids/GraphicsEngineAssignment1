@@ -9,7 +9,7 @@ public class FrameBuffer {
 	private int[] pixels;
 	private int width;
 	private int height;
-	
+
 	//Set up memory for pixel data
 	public FrameBuffer(int width, int height) {
 		this.width = width;
@@ -20,31 +20,68 @@ public class FrameBuffer {
 	//A start on the point function. NOTE this is not complete!
 	public void point(int xc, int yc, int r, int g, int b, int a) {
 		// save point r g b a information into array
-		int rgba = r;
-		rgba = (rgba << 4) + g;
-		rgba = (rgba << 8) + b;
-		rgba = (rgba << 12) + a;
+		int rgba = getRGBA(r, g, b, a);
 		pixels[xc+yc*width] = rgba;
-		
+
 	}
 
-	public void lineFloat(int x1, int x2, int y1, int y2, int r, int g, int b, int a) {
-		
+	public void lineFloat(int x1, int y1, int x2, int y2, int r, int g, int b, int a) {
+		int x,y;
+		if (x1 == x2) {
+			// draw vertical line
+			if(y1<y2) {
+				for (y = y1; y<=y2; y++) {
+					point(x1, y, r, g, b, a);
+				}
+			}else{  // y2<=y1
+				for (y = y2; y<=y1; y++) {
+					point(x1, y, r, g, b, a);
+				}
+			}
+		}else if(y1 == y2) {
+			// draw horizontal line
+			if(x1 < x2) {
+				for (x = x1; x<=x2; x++) {
+					point(x, y1, r, g, b, a);
+				}
+			}else{  // x2 <= x1
+				for (x = x2; x<=x1; x++) {
+					point(x, y1, r, g, b, a);
+				}
+			}
+		}else{
+			float m = (float)(y2-y1)/(x2-x1);  // (dy/dx)
+			float c = y1-m*x1;
+			int rgba = getRGBA(r, g, b, a);
+			if(x1>x2) {
+				for(x = x2+1; x<x1; x++) {
+					y = (int) (m*x + c);
+					point(x, y, r, g, b, a);
+				}
+			}else if (x2>x1) {
+				for(x = x1+1; x<x2; x++) {
+					y = (int) (m*x + c);
+					point(x, y, r, g, b, a);
+				}
+			}
+			point(x1, y1, r, g, b, a);
+			point(x2, y2, r, g, b, a);
+		}
+
 	}
+
+
 	// Definitions for the getRed, getGreen and getBlue functions. NOTE these are not complete!
 	public int getRed(int xc, int yc) {
-		// TODO: Implement these functions using bitwise operations and masking to retrieve individual colour components
-		return 0;
+		return pixels[xc+yc*width] >> 24 & 0xFF;
 	}
 
 	public int getGreen(int xc, int yc) {
-		// TODO: Implement these functions using bitwise operations and masking to retrieve individual colour components
-		return 0;
+		return pixels[xc+yc*width] >> 16 & 0xFF;
 	}
 
 	public int getBlue(int xc, int yc) {
-		// TODO: Implement these functions using bitwise operations and masking to retrieve individual colour components
-		return 0;
+		return pixels[xc+yc*width] >> 8 & 0xFF;
 	}
 
 	public int getWidth() {
@@ -57,5 +94,13 @@ public class FrameBuffer {
 
 	public int[] getPixels() {
 		return pixels;
+	}
+
+	private int getRGBA (int r, int g, int b, int a) {
+		int rgba = r;
+		rgba = (rgba << 8) + g;
+		rgba = (rgba << 8) + b;
+		// TODO save alpha value in rgba using int
+		return rgba;
 	}
 }
