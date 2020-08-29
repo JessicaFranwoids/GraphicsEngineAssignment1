@@ -70,6 +70,71 @@ public class FrameBuffer {
 
 	}
 
+	public void bresehamLine(int x1, int y1, int x2, int y2, int r, int g, int b, int a) {
+		int p,x,y;
+		int deltaX = x2-x1; // dx
+		int deltaY = y2-y1; // dy
+		int twoDy = 2*deltaY; // 2dy
+		int twoDx = 2*deltaX;
+		x = x1;
+		y = y1;
+		p = 2*deltaY - deltaX;
+		if(x1<x2) {
+			if(y1<y2) {
+				// x1<x2, y1<y2
+				int twoDyMinusDx = 2*(deltaY - deltaX); // 2dy-2dx
+				while(x <= x2) {
+					// draw current point
+					point(x, y, r, g, b, a);
+					//Calculate next point
+					x++;
+					if(p<0) {
+						p = p + twoDy;
+					}else {
+						p = p + twoDyMinusDx;
+						y++;
+					}
+				}
+			}else{
+				// x1<x2, y1>=y2
+				
+			}
+		}else{
+			if(y1<y2) {
+				// x1>=x2, y1<y2
+				int twoDyAddDx = 2*(deltaY + deltaX);// 2dx + 2dy
+				while(x >= x2) {
+					// draw current point
+					point(x, y, r, g, b, a);
+					//Calculate next point
+					x--;
+					if(p<0) {
+						p = p - twoDyAddDx;
+						y--;
+					}else {
+						p = p - twoDy;
+					
+					}
+				}
+			}else{
+				// x1>=x2, y1>=y2
+
+			}
+		}
+	}
+
+
+	// method for Breseham's line
+	public void moveUP(int x, int y, int r, int g, int b, int a) {
+		point(x, y-1, r, g, b, a);
+	}
+	public void moveRight(int x, int y, int r, int g, int b, int a) {
+		point(x+1, y, r, g, b, a);
+	}
+	public void moveDown(int x, int y, int r, int g, int b, int a) {
+		point(x, y+1, r, g, b, a);
+	}
+
 
 	// Definitions for the getRed, getGreen and getBlue functions. NOTE these are not complete!
 	public int getRed(int xc, int yc) {
