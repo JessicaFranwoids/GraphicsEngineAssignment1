@@ -159,6 +159,9 @@ public class Assign1 {
 						alpha = color[3];
 						// draw Bresenham's line
 						buffer.bresehamLine(x1, y1, x2, y2, red, green, blue, alpha);
+						System.out.println("Drawing Bresenham's line: (" + x1 + "," + y1 
+								+ "), (" + x2 + "," + y2 
+								+ ") , R=" + red + " G="+green + " B="+blue + " A="+ alpha + ")");
 						break;
 					case "OUTLINE_POLYGON":
 						break;
