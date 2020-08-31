@@ -96,16 +96,18 @@ public class FrameBuffer {
 						y++;
 					}
 				}
-				while(x <= x2) {
+				x = x1;
+				y = y1;
+				while(y < y2) {
 					// draw current point
 					point(x, y, r, g, b, a);
 					//Calculate next point
-					x++;
+					y++;
 					if(p<0) {
-						p = p - twoDy;
-					}else {
 						p = p + twoDyMinusDx;
-						y++;
+						x++;
+					}else {
+						p = p - twoDx;
 					}
 				}
 			}else{
@@ -120,6 +122,21 @@ public class FrameBuffer {
 					}else {
 						p = p - twoDyAddDx;
 						y--;
+					}
+				}
+				// TODO 
+				x = x1;
+				y = y1;
+				while(y >= y2) {
+					// draw current point
+					point(x, y, r, g, b, a);
+					//Calculate next point
+					y--;
+					if(p<0) {
+						p += twoDx;
+					}else {
+						p += twoDyAddDx;
+						x--;
 					}
 				}
 			}
@@ -138,6 +155,21 @@ public class FrameBuffer {
 						p = p - twoDy;
 					}
 				}
+				// TODO 
+				x = x1;
+				y = y1;
+				while(y < y2) {
+					// draw current point
+					point(x, y, r, g, b, a);
+					//Calculate next point
+					y++;
+					if(p<0) {
+						p += twoDx;
+					}else {
+						p += twoDyAddDx;
+						x++;
+					}
+				}
 			}else{
 				// x1>=x2, y1>=y2
 				while(x >= x2) {
@@ -150,6 +182,21 @@ public class FrameBuffer {
 					}else {
 						p = p + twoDyAddDx;
 						y++;
+					}
+				}
+				// TODO 
+				x = x1;
+				y = y1;
+				while(y >= y2) {
+					// draw current point
+					point(x, y, r, g, b, a);
+					//Calculate next point
+					y--;
+					if(p<0) {
+						p += twoDx;
+					}else {
+						p += twoDyAddDx;
+						x--;
 					}
 				}
 			}
