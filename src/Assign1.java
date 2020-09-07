@@ -110,12 +110,7 @@ public class Assign1 {
 						green = color[1];
 						blue = color[2];
 						alpha = color[3];
-
-						//                            String[] color = rgbaString.split(","); 
-						//                            int red = Integer.parseInt(color[0]);
-						//                            int green = Integer.parseInt(color[1]);
-						//                            int blue = Integer.parseInt(color[2]);
-						//                            int alpha = Integer.parseInt(color[3]);
+;
 						//Draw a point with our point method
 						buffer.point(xc, yc, red, green, blue, alpha);
 						canvas.repaint();

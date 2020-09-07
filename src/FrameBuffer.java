@@ -72,135 +72,153 @@ public class FrameBuffer {
 
 	public void bresehamLine(int x1, int y1, int x2, int y2, int r, int g, int b, int a) {
 		int p,x,y;
-		int deltaX = x2-x1; // dx
-		int deltaY = y2-y1; // dy
-		int twoDy = 2*deltaY; // 2dy
-		int twoDx = 2*deltaX;
-		int twoDyMinusDx = 2*(deltaY - deltaX); // 2dy-2dx
-		int twoDyAddDx = 2*(deltaY + deltaX);// 2dx + 2dy
+		int dx = Math.abs(x2-x1); // dx
+		int dy = Math.abs(y2-y1) ; // dy
+		int twoDy = 2*dy; // 2dy
+		int twoDx = 2*dx;
+		int twoDyMinusDx = 2*(dy - dx); // 2dy-2dx
+		int twoDyAddDx = 2*(dy + dx);// 2dx + 2dy
 		x = x1;
 		y = y1;
-		p = 2*deltaY - deltaX;
-		if(x1<x2) {
-			if(y1<y2) {
-				// x1<x2, y1<y2
-				while(x <= x2) {
-					// draw current point
-					point(x, y, r, g, b, a);
-					//Calculate next point
-					x++;
-					if(p<0) {
-						p = p + twoDy;
-					}else {
-						p = p + twoDyMinusDx;
-						y++;
-					}
-				}
-				x = x1;
-				y = y1;
-				while(y < y2) {
-					// draw current point
-					point(x, y, r, g, b, a);
-					//Calculate next point
-					y++;
-					if(p<0) {
-						p = p + twoDyMinusDx;
-						x++;
-					}else {
-						p = p - twoDx;
-					}
-				}
-			}else{
-				// x1<x2, y1>=y2
-				while(x <= x2) {
-					// draw current point
-					point(x, y, r, g, b, a);
-					//Calculate next point
-					x++;
-					if(p<0) {
-						p = p - twoDy;
-					}else {
-						p = p - twoDyAddDx;
-						y--;
-					}
-				}
-				// TODO 
-				x = x1;
-				y = y1;
-				while(y >= y2) {
-					// draw current point
-					point(x, y, r, g, b, a);
-					//Calculate next point
-					y--;
-					if(p<0) {
-						p += twoDx;
-					}else {
-						p += twoDyAddDx;
-						x--;
-					}
-				}
+		if(x1>x2) {
+			//draw from (x2,y)
+			x = x2;
+			x2 = x1;
+			if(y1>y2) {
+				y = y2;
+				y2 = y1;
 			}
-		}else{
-			if(y1<y2) {
-				// x1>=x2, y1<y2
-				while(x >= x2) {
-					// draw current point
-					point(x, y, r, g, b, a);
-					//Calculate next point
-					x--;
-					if(p<0) {
-						p = p - twoDyAddDx;
-						y--;
-					}else {
-						p = p - twoDy;
-					}
-				}
-				// TODO 
-				x = x1;
-				y = y1;
-				while(y < y2) {
-					// draw current point
-					point(x, y, r, g, b, a);
-					//Calculate next point
-					y++;
-					if(p<0) {
-						p += twoDx;
-					}else {
-						p += twoDyAddDx;
-						x++;
-					}
-				}
-			}else{
-				// x1>=x2, y1>=y2
-				while(x >= x2) {
-					// draw current point
-					point(x, y, r, g, b, a);
-					//Calculate next point
-					x--;
-					if(p<0) {
-						p = p - twoDy;
-					}else {
-						p = p + twoDyAddDx;
-						y++;
-					}
-				}
-				// TODO 
-				x = x1;
-				y = y1;
-				while(y >= y2) {
-					// draw current point
-					point(x, y, r, g, b, a);
-					//Calculate next point
-					y--;
-					if(p<0) {
-						p += twoDx;
-					}else {
-						p += twoDyAddDx;
-						x--;
-					}
-				}
-			}
+		}else {
+			//x1<=x2
+			x = x1;
+			y = y1;
 		}
+
+		p = 2*dy - dx;
+		if(dx>dy) {
+			// degree <45
+			while(x <= x2) {
+				// draw current point
+				point(x, y, r, g, b, a);
+				//Calculate next point
+				x++;
+				if(p<0) {
+					p = p + twoDy;
+				}else {
+					p = p + twoDyMinusDx;
+					if(y2<y1) {
+						y--;
+					}else {
+						y++;
+					}
+				}
+			}
+		}else {
+			//			//degree >= 45
+			while(y < y2) {
+				// draw current point
+				point(x, y, r, g, b, a);
+				//Calculate next point
+				y++;
+				if(p<0) {
+					p = p + twoDyMinusDx;
+					x++;
+				}else {
+					p = p - twoDx;
+				}
+			}
+		}		
+		//			}else{
+		//				// x1<x2, y1>=y2
+		//				while(x <= x2) {
+		//					// draw current point
+		//					point(x, y, r, g, b, a);
+		//					//Calculate next point
+		//					x++;
+		//					if(p<0) {
+		//						p = p - twoDy;
+		//					}else {
+		//						p = p - twoDyAddDx;
+		//						y--;
+		//					}
+		//				}
+		//				// TODO 
+		//				x = x1;
+		//				y = y1;
+		//				while(y >= y2) {
+		//					// draw current point
+		//					point(x, y, r, g, b, a);
+		//					//Calculate next point
+		//					y--;
+		//					if(p<0) {
+		//						p += twoDx;
+		//					}else {
+		//						p += twoDyAddDx;
+		//						x--;
+		//					}
+		//				}
+		//			}
+		//		}else{
+		//			if(y1<y2) {
+		//				// x1>=x2, y1<y2
+		//				while(x >= x2) {
+		//					// draw current point
+		//					point(x, y, r, g, b, a);
+		//					//Calculate next point
+		//					x--;
+		//					if(p<0) {
+		//						p = p - twoDyAddDx;
+		//						y--;
+		//					}else {
+		//						p = p - twoDy;
+		//					}
+		//				}
+		//				// TODO 
+		//				x = x1;
+		//				y = y1;
+		//				while(y < y2) {
+		//					// draw current point
+		//					point(x, y, r, g, b, a);
+		//					//Calculate next point
+		//					y++;
+		//					if(p<0) {
+		//						p += twoDx;
+		//					}else {
+		//						p += twoDyAddDx;
+		//						x++;
+		//					}
+		//				}
+		//			}else{
+		//				// x1>=x2, y1>=y2
+		//				while(x >= x2) {
+		//					// draw current point
+		//					point(x, y, r, g, b, a);
+		//					//Calculate next point
+		//					x--;
+		//					if(p<0) {
+		//						p = p - twoDy;
+		//					}else {
+		//						p = p + twoDyAddDx;
+		//						y++;
+		//					}
+		//				}
+		//				// TODO 
+		//				x = x1;
+		//				y = y1;
+		//				while(y >= y2) {
+		//					// draw current point
+		//					point(x, y, r, g, b, a);
+		//					//Calculate next point
+		//					y--;
+		//					if(p<0) {
+		//						p += twoDx;
+		//					}else {
+		//						p += twoDyAddDx;
+		//						x--;
+		//					}
+		//				}
+		//			}
+		//		}
 	}
 
 
