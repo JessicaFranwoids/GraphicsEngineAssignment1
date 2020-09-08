@@ -71,48 +71,54 @@ public class FrameBuffer {
 	}
 	// method for Breseham's line
 	public void bresehamLine(int x1, int y1, int x2, int y2, int r, int g, int b, int a) {
-		int p,x,y;
 		int dx = Math.abs(x2-x1); // dx
 		int dy = Math.abs(y2-y1) ; // dy
 		int twoDy = 2*dy; // 2dy
 		int twoDx = 2*dx;
 		int twoDyMinusDx = 2*(dy - dx); // 2dy-2dx
-		int twoDyAddDx = 2*(dy + dx);// 2dx + 2dy
-		x = x1;
-		y = y1;
-		if(x1>x2) {
+		int twoDyAddDx = 2*(dy + dx);
+		int p = 2*dy - dx;
+		int x = x1;
+		int y = y1;
+		if((x1>x2)) {
 			//draw from (x2,y2)
-			x = x2;
-			x2 = x1;
-			y = y2;
-			y2 = y1;
+			x = x2; x2 = x1; y = y2; y2 = y1;
 		}
 		p = 2*dy - dx;
+		
 		if(dx>dy) {
-			// degree <45
+			// dx>dy, 0<k<1, so that 0< degree <45, 
 			while(x <= x2) {
 				// draw current point
 				point(x, y, r, g, b, a);
 				//Calculate next point
 				x++;
 				if(p<0) {
-					p = p + twoDy;
+						p += twoDy;
 				}else {
 					p = p + twoDyMinusDx;
-					if(y2<y1) {
-						y--;
-					}else {
+					if(y1<=y2) {
+						//
 						y++;
+					}else {
+						//y1>y2,
+						y--;
 					}
 				}
 			}
 		}else {
-			//degree >= 45
-			while(y < y2) {
+			//dx<dy, k>1, so that degree >= 45
+			while(Math.abs(y-y2) != 0) {
 				// draw current point
 				point(x, y, r, g, b, a);
 				//Calculate next point
-				y++;
+				if(y<=y2) {
+					//dy/dx > 0
+					y++;
+				}else {
+					//dy/dx <= 0
+					y--;
+				}
 				if(p<0) {
 					p = p + twoDyMinusDx;
 					x++;
@@ -120,20 +126,9 @@ public class FrameBuffer {
 					p = p - twoDx;
 				}
 			}
-			while(y > y2) {
-				// draw current point
-				point(x, y, r, g, b, a);
-				//Calculate next point
-				y--;
-				if(p<0) {
-					p = p + twoDyMinusDx;
-					x++;
-				}else {
-					p = p - twoDx;
-				}
-			}
-		}		
+		}
 	}
+
 
 	public void moveUP(int x, int y, int r, int g, int b, int a) {
 		point(x, y-1, r, g, b, a);
