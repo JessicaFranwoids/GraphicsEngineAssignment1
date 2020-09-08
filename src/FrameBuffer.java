@@ -77,74 +77,79 @@ public class FrameBuffer {
 		int twoDy = 2*dy; // 2dy
 		int twoDx = 2*dx;
 		int twoDyMinusDx = 2*(dy - dx); // 2dy-2dx
-		int twoDyAddDx = 2*(dy + dx);// 2dx + 2dy
+		int twoDyAddDx = 2*(dy + dx);
+		int s1, s2, temp;
+		int interchange = 0;//interchage == 1:dy>dx; interchage == 0:dx>dy
+		p = 2*dy - dx;
 		x = x1;
 		y = y1;
-		if(x1>x2) {
-			//draw from (x2,y2)
-			x = x2;
-			x2 = x1;
-			y = y2;
-			y2 = y1;
+//===================================================================
+		if((x2-x1>0 && y2-y1>0) || (x2-x1<0 && y2-y1<0)) {
+			
 		}
-		p = 2*dy - dx;
-		if(dx>dy) {
-			// degree <45
-			while(x <= x2) {
-				// draw current point
-				point(x, y, r, g, b, a);
-				//Calculate next point
-				x++;
-				if(p<0) {
-					p = p + twoDy;
-				}else {
-					p = p + twoDyMinusDx;
-					if(y2<y1) {
-						y--;
-					}else {
-						y++;
-					}
-				}
-			}
-		}else {
-			//degree >= 45
-			while(y < y2) {
-				// draw current point
-				point(x, y, r, g, b, a);
-				//Calculate next point
+		if((x1>x2)) {
+			//draw from (x2,y2)
+			x = x2; x2 = x1; y = y2; y2 = y1;
+		}
+		while(Math.abs(y-y2) != 0) {
+			// draw current point
+			point(x, y, r, g, b, a);
+			//Calculate next point
+			if(y<=y2) {
+				//dy/dx > 0
 				y++;
-				if(p<0) {
-					p = p + twoDyMinusDx;
-					x++;
-				}else {
-					p = p - twoDx;
-				}
-			}
-			while(y > y2) {
-				// draw current point
-				point(x, y, r, g, b, a);
-				//Calculate next point
+			}else {
+				//dy/dx <= 0
 				y--;
-				if(p<0) {
-					p = p + twoDyMinusDx;
-					x++;
+			}
+			if(p<0) {
+				p = p + twoDyMinusDx;
+				x++;
+			}else {
+				p = p - twoDx;
+			}
+		}
+//		//===========================================================
+		if(x2>=x1) {
+			s1 = 1;
+		}else {
+			s1 = -1;
+		}
+		if(y2>=y1) {
+			s2 = 1;
+		}else {
+			s2 = -1;
+		}
+		if(dy>dx) {//exchange dx and dy
+			temp = dx;
+			dx = dy;
+			dy = temp;
+			interchange = 1;//interchage == 1:dy>dx; interchage == 0:dx>dy
+		}else {
+			
+		}
+		
+		for(int i = 0; i<=dx; i++) {
+			point(x,y,r,g,b,a);
+			if(p>0) {
+				if(interchange == 1) {
+					//interchage == 1:dy>dx; interchage == 0:dx>dy
+					x+=s1;
 				}else {
-					p = p - twoDx;
+					y+=s2;
+					p-=twoDx;
 				}
 			}
-		}		
+			if(interchange == 1) {
+				//interchage == 1:dy>dx; interchage == 0:dx>dy
+				y+=s2;
+			}else {
+				x+=s1;
+				p+=twoDy;
+			}
+		}
+//	
 	}
-
-	public void moveUP(int x, int y, int r, int g, int b, int a) {
-		point(x, y-1, r, g, b, a);
-	}
-	public void moveRight(int x, int y, int r, int g, int b, int a) {
-		point(x+1, y, r, g, b, a);
-	}
-	public void moveDown(int x, int y, int r, int g, int b, int a) {
-		point(x, y+1, r, g, b, a);
-	}
-
 
 	// Definitions for the getRed, getGreen and getBlue functions. NOTE these are not complete!
 	public int getRed(int xc, int yc) {
