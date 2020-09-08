@@ -80,13 +80,15 @@ public class FrameBuffer {
 		int p = 2*dy - dx;
 		int x = x1;
 		int y = y1;
+		int xEnd = x2;
+		int yEnd = y2;
 		if((x1>x2)) {
 			//draw from (x2,y2)
-			x = x2; x2 = x1; y = y2; y2 = y1;
+			x = x2; xEnd = x1; y = y2; yEnd = y1;
 		}
 		if(dx>dy) {
 			// dx>dy, 0<k<1, so that 0< degree <45, 
-			while(x <= x2) {
+			while(x <= xEnd) {
 				// draw current point
 				point(x, y, r, g, b, a);
 				//Calculate next point
@@ -95,7 +97,7 @@ public class FrameBuffer {
 						p += twoDy;
 				}else {
 					p = p + twoDyMinusDx;
-					if(y1<=y2) {
+					if(y<=yEnd) {
 						//
 						y++;
 					}else {
@@ -106,11 +108,11 @@ public class FrameBuffer {
 			}
 		}else {
 			//dx<dy, k>1, so that degree >= 45
-			while(Math.abs(y-y2) != 0) {
+			while(Math.abs(y-yEnd) != 0) {
 				// draw current point
 				point(x, y, r, g, b, a);
 				//Calculate next point
-				if(y<=y2) {
+				if(y<=yEnd) {
 					//dy/dx > 0
 					y++;
 				}else {
