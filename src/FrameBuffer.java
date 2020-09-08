@@ -84,8 +84,6 @@ public class FrameBuffer {
 			//draw from (x2,y2)
 			x = x2; x2 = x1; y = y2; y2 = y1;
 		}
-		p = 2*dy - dx;
-		
 		if(dx>dy) {
 			// dx>dy, 0<k<1, so that 0< degree <45, 
 			while(x <= x2) {
