@@ -1,0 +1,14 @@
+#
+#Point file test for 500x500 in pattern locations
+#
+
+#Create a frame with 500x500 pixels (top left should be 0,0,255)
+INIT 500 500
+
+# Draw lines to test all quadrants
+
+OUTLINE_CIRCLE 80 80 80 (255,0,0,255)
+OUTLINE_CIRCLE 160 160 160 (255,0,0,255)
+OUTLINE_CIRCLE 300 300 150.6  (255,244,85,255)
+
+SAVE 05-01CircleTest.bmp

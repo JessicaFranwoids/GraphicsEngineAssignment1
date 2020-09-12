@@ -112,6 +112,7 @@ public class Assign1 {
 						green = color[1];
 						blue = color[2];
 						alpha = color[3];
+;
 						//Draw a point with our point method
 						buffer.point(xc, yc, red, green, blue, alpha);
 						canvas.repaint();

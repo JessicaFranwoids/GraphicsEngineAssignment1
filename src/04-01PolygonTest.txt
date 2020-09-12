@@ -1,0 +1,13 @@
+#
+#Point file test for 500x500 in pattern locations
+#
+
+#Create a frame with 500x500 pixels (top left should be 0,0,255)
+INIT 500 500
+
+# Draw lines to test all quadrants
+
+OUTLINE_POLYGON 190 80 290 80 290 180 190 180 (255,0,0,255)
+OUTLINE_POLYGON 80 80 90 80 180 80 80 80 180 180 80 180 180 80 180 180 80 180 (255,225,0,255)
+
+SAVE 04-01PolygonTest.bmp
